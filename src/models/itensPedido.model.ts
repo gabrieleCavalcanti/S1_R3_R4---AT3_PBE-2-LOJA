@@ -49,8 +49,4 @@ export class ItensPedido {
         return new ItensPedido(idPedido, idProduto, qtd);
     }
 
-    public static editar(idPedido: number, idProduto: number, qtd: number,  id: number)  {
-        return new ItensPedido(idPedido, idProduto, qtd, id);
-    }
-
 }

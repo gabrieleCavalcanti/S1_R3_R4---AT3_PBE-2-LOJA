@@ -5,7 +5,7 @@ export interface ICliente extends RowDataPacket {
     id?: number;
     nome?: string;
     email?: string;
-    cpf?: string    
+    cpf?: string
 }
 
 export class Cliente extends Pessoa {
@@ -13,6 +13,7 @@ export class Cliente extends Pessoa {
     private _id?: number;
     private _cpf: string = "";
 
+    //Construtor
     constructor(nome: string, email: string, cpf: string, id?: number,) {
         super(nome, email);
 

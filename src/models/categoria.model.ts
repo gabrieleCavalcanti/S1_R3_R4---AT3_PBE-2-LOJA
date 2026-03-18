@@ -1,8 +1,5 @@
 import { RowDataPacket } from "mysql2"; 
-// RowDataPacket é o tipo base retornado pelo MySQL (mysql2).
-// Ao estender ele, garantimos que a interface represente uma linha vinda do banco.
 
-// interface não usa recurso, então devemos usar
 export interface ICategoria extends RowDataPacket {
     id?: number;
     nome?: string;
@@ -10,7 +7,7 @@ export interface ICategoria extends RowDataPacket {
     dataCad?: Date
 }
 
-//? - dispensavel na criação do objeto
+
 export class Categoria {
     private _id?: number;
     private _nome: string = '';

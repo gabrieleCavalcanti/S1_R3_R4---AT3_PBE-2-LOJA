@@ -7,7 +7,7 @@ const produtoRoutes =Router();
 
 produtoRoutes.get('/produtos', produtoController.selecionaTodos);
 produtoRoutes.post('/produtos', uploadImage, produtoController.criar);
-produtoRoutes.patch('/produtos', produtoController.editar);
+produtoRoutes.patch('/produtos', uploadImage ,produtoController.editar);
 
 
 export default produtoRoutes;

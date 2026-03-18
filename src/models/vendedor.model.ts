@@ -10,12 +10,12 @@ export interface IVendedor extends RowDataPacket {
 export class Vendedor extends Pessoa {
     private _id?: number;
 
+        //Construtor
     constructor(nome: string, email: string, id?: number) {
         super(nome, email);
 
         this._id = id;
     }
-
 
     //GETTERS
     public get Id(): number | undefined {

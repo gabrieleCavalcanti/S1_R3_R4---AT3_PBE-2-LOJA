@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ProdutoService } from "../services/produto.service";
+import fs from 'fs';
 
 export class ProdutoController {
     constructor(private _service = new ProdutoService()) { }
@@ -37,16 +38,22 @@ export class ProdutoController {
             }
 
             const existeCategoria = await this._service.selecionaCategoriaAtiva(idCategoria);
-            if (existeCategoria.length === 0) {
-                return res.status(200).json({ message: `Não é existe essa categoria` });
-            }
-            if (!existeCategoria[0].ativo) {
-                return res.status(200).json({ message: `Categoria não esta ativa` });
-            }
+
             if (!req.file) {
                 return res.status(400).json({ message: 'Imagem é obrigatória!' });
             }
+
             const img = req.file.filename;
+
+            if (existeCategoria.length === 0) {
+                fs.unlinkSync(req.file.path);
+                return res.status(200).json({ message: `Não é existe essa categoria` });
+            }
+
+            if (!existeCategoria[0].ativo) {
+                fs.unlinkSync(req.file.path);
+                return res.status(200).json({ message: `Categoria não esta ativa` });
+            }
 
             const novo = await this._service.criar(nome, img, qtd, valor, idCategoria);
             res.status(201).json({ novo });
@@ -61,13 +68,31 @@ export class ProdutoController {
     }
     editar = async (req: Request, res: Response) => {
         try {
-            const { nome, img, qtd, valor, idCategoria } = req.body;
+            const id = Number(req.query.id)
+            const {nome, qtd, valor, idCategoria } = req.body;
 
             if (!nome || !isNaN(nome) || !valor || isNaN(valor) || !qtd || isNaN(qtd) || !idCategoria || isNaN(idCategoria)) {
                 return res.status(200).json({ message: 'Valor invalido!' })
             }
 
-            const id = Number(req.query.id)
+            const existeCategoria = await this._service.selecionaCategoriaAtiva(idCategoria);
+
+            if (!req.file) {
+                return res.status(400).json({ message: 'Imagem é obrigatória!' });
+            }
+
+            const img = req.file.filename;
+
+            if (existeCategoria.length === 0) {
+                fs.unlinkSync(req.file.path);
+                return res.status(200).json({ message: `Não é existe essa categoria` });
+            }
+
+            if (!existeCategoria[0].ativo) {
+                fs.unlinkSync(req.file.path);
+                return res.status(200).json({ message: `Categoria não esta ativa` });
+            }
+
             const alterado = await this._service.editar(id, nome, img, qtd, valor, idCategoria);
             res.status(200).json({ alterado });
 

@@ -17,8 +17,7 @@ export class ItensPedidoService {
         return await this._repository.create(pedido);
     }
 
-    async editar(id: number, idPedido: number, idProduto: number, qtd: number) {
-        const pedido = ItensPedido.editar(idPedido, idProduto, qtd, id);
-        return await this._repository.update(id, pedido)
+    async deletar(id: number) {
+        return await this._repository.delete(id);
     }
 }

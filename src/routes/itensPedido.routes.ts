@@ -6,7 +6,8 @@ const itensPedidoRoutes =Router();
 
 itensPedidoRoutes.get('/itensPedidos', itensPedidoController.selecionaTodos);
 itensPedidoRoutes.post('/itensPedidos', itensPedidoController.criar);
-itensPedidoRoutes.patch('/itensPedidos', itensPedidoController.editar);
+itensPedidoRoutes.delete('/itensPedidos', itensPedidoController.deletar);
+
 
 
 export default itensPedidoRoutes;

@@ -47,17 +47,14 @@ export class ItensPedidoController {
             res.status(500).json({ message: 'Ocorreu um erro no servidor', errorMessage: 'Erro Desconhecido' });
         }
     }
-    editar = async (req: Request, res: Response) => {
+    deletar = async (req: Request, res: Response) => {
         try {
-            const { idPedido, idProduto, qtd } = req.body;
-
-            if (!idPedido || isNaN(idPedido) || !idProduto || isNaN(idProduto) || !qtd || isNaN(qtd)) {
-                return res.status(200).json({ message: 'Valor invalido!' })
-            }
-
             const id = Number(req.query.id)
-            const alterado = await this._service.editar(id, idPedido, idProduto, qtd);
-            res.status(200).json({ alterado });
+            const deletado = await this._service.deletar(id);
+            if (deletado.affectedRows === 0) {
+                res.status(200).json({ message: `Registro ID: ${id} não existe` });
+            }
+            res.status(200).json({ message: 'Excluido com sucesso!', deletado });
 
         } catch (error: unknown) {
             console.error(error);
@@ -67,4 +64,5 @@ export class ItensPedidoController {
             res.status(500).json({ message: 'Ocorreu um erro no servidor', errorMessage: 'Erro Desconhecido' });
         }
     }
+
 }
